@@ -5,11 +5,32 @@ import { Chart } from 'chart.js/auto';
 const App = () => {
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [containers, setContainers] = useState([]);
+  const [token, setToken] = useState('');
+  const [ws, setWs] = useState(null);
 
   useEffect(() => {
+    // Authenticate and get token
+    const authenticate = async () => {
+      try {
+        const response = await axios.post('/api/auth', { username: 'admin', password: 'admin' });
+        setToken(response.data.token);
+      } catch (error) {
+        console.error('Authentication error:', error);
+      }
+    };
+
+    authenticate();
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+
     const fetchMetrics = async () => {
       try {
-        const response = await axios.get('/api/metrics');
+        const response = await axios.get('/api/metrics', {
+          headers: { Authorization: token },
+        });
         setMetrics(response.data);
         setLoading(false);
       } catch (error) {
@@ -18,10 +39,49 @@ const App = () => {
       }
     };
 
+    const fetchContainers = async () => {
+      try {
+        const response = await axios.get('/api/containers', {
+          headers: { Authorization: token },
+        });
+        setContainers(response.data);
+      } catch (error) {
+        console.error('Error fetching containers:', error);
+      }
+    };
+
     fetchMetrics();
+    fetchContainers();
     const interval = setInterval(fetchMetrics, 5000); // Refresh every 5 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return;
+
+    // Initialize WebSocket
+    const socket = new WebSocket(`ws://localhost:3000`);
+    socket.onopen = () => {
+      console.log('WebSocket connected');
+      setWs(socket);
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === 'metrics') {
+        setMetrics((prev) => [data.payload, ...prev.slice(0, 99)]);
+      }
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket disconnected');
+      setWs(null);
+    };
+
+    return () => {
+      if (socket) socket.close();
+    };
+  }, [token]);
 
   useEffect(() => {
     if (metrics.length > 0) {
@@ -69,6 +129,14 @@ const App = () => {
       ) : (
         <div className="chart-container">
           <canvas id="metricsChart"></canvas>
+          <div className="containers">
+            <h2>Docker Containers</h2>
+            <ul>
+              {containers.map((container) => (
+                <li key={container.Id}>{container.Names[0]}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
