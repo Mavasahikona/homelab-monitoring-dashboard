@@ -1,7 +1,7 @@
 {
   "name": "homelab-monitoring-dashboard",
   "version": "1.0.0",
-  "description": "A self-hosted monitoring dashboard for homelab environments.",
+  "description": "A monitoring dashboard for homelab environments.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,16 +9,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.6",
-    "chart.js": "^4.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "axios": "^1.5.0"
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "chart.js": "^3.5.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
-  },
-  "author": "Mavasahikona",
-  "license": "MIT"
+    "nodemon": "^2.0.12"
+  }
 }
