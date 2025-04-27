@@ -1,7 +1,7 @@
 {
   "name": "homelab-monitoring-dashboard",
-  "version": "1.0.0",
-  "description": "A self-hosted monitoring dashboard for homelab environments.",
+  "version": "1.1.0",
+  "description": "A self-hosted monitoring dashboard for homelab environments with enhanced features.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,7 +14,10 @@
     "chart.js": "^4.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.5.0"
+    "axios": "^1.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.16.0",
+    "dockerode": "^3.3.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
