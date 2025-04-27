@@ -8,6 +8,9 @@ A self-hosted monitoring dashboard designed for homelab environments. This dashb
 - **Service Health**: Monitor the status of your homelab services (e.g., Plex, Nextcloud, etc.).
 - **Customizable Alerts**: Set up alerts for critical events.
 - **Easy Setup**: Simple installation and configuration process.
+- **Enhanced Metrics**: Now includes Docker container metrics and real-time WebSocket updates.
+- **Authentication**: Secure access with JWT-based authentication.
+- **Visualizations**: Interactive graphs powered by Chart.js.
 
 ## Installation
 
@@ -38,6 +41,8 @@ After starting the dashboard, access it via `http://localhost:3000` in your brow
 - **Backend**: Node.js
 - **Database**: SQLite (for lightweight storage)
 - **Visualization**: Chart.js
+- **Authentication**: JWT
+- **Real-time Updates**: WebSocket
 
 ## Contributing
 
