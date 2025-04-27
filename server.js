@@ -1,6 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,18 +19,17 @@ const db = new sqlite3.Database('./database.db', (err) => {
 });
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
 app.get('/api/metrics', (req, res) => {
-  db.all('SELECT * FROM metrics ORDER BY timestamp DESC LIMIT 100', [], (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(rows);
-  });
+  // Mock data for testing
+  const mockData = [
+    { timestamp: new Date().toISOString(), cpu_usage: Math.random() * 100, memory_usage: Math.random() * 100, disk_usage: Math.random() * 100, network_in: Math.random() * 100, network_out: Math.random() * 100 },
+  ];
+  res.json(mockData);
 });
 
 app.post('/api/metrics', (req, res) => {
