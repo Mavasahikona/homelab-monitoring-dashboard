@@ -25,12 +25,23 @@ A self-hosted monitoring dashboard designed for homelab environments. This dashb
    ```
 4. Start the dashboard:
    ```bash
+   node server.js
+   ```
+   For the frontend (if using React scripts):
+   ```bash
    npm start
    ```
 
 ## Usage
 
 After starting the dashboard, access it via `http://localhost:3000` in your browser. Configure the dashboard settings to match your homelab environment.
+
+## Debugging
+
+If you encounter a blank screen:
+1. **Check the backend**: Ensure the server is running (`node server.js`).
+2. **Inspect the console**: Open the browser's developer tools (`F12`) and look for errors in the Console and Network tabs.
+3. **Verify CORS**: Ensure the backend has CORS enabled (already configured in `server.js`).
 
 ## Technologies Used
 
