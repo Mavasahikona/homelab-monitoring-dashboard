@@ -21,7 +21,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))
 
 // API Routes
 app.get('/api/metrics', (req, res) => {
