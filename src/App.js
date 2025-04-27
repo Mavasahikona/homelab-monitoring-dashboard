@@ -5,6 +5,7 @@ import { Chart } from 'chart.js/auto';
 const App = () => {
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -14,6 +15,7 @@ const App = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching metrics:', error);
+        setError('Failed to load metrics. Please try again later.');
         setLoading(false);
       }
     };
@@ -66,6 +68,8 @@ const App = () => {
       <h1>Homelab Monitoring Dashboard</h1>
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p className="error">{error}</p>
       ) : (
         <div className="chart-container">
           <canvas id="metricsChart"></canvas>
